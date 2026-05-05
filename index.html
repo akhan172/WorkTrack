@@ -333,6 +333,27 @@
       text-align: center;
       padding: 18px 0;
     }
+    /* Dark theme overrides */
+    [data-theme="dark"] {
+    --bg: #3a3a44;
+    --card: #18181b;
+    --ink: #fafafa;
+    --ink-soft: #a1a1aa;
+    --ink-faint: #3f3f46;
+    --border: #27272a;
+    --accent-bg: #2d1b16;
+    }
+
+    #themeToggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    }
+    #themeToggle:hover { border-color: var(--accent); }
   </style>
 </head>
 <body>
@@ -342,6 +363,7 @@
   <div class="header">
     <h1>Work Logger</h1>
     <span class="date-badge" id="todayDate"></span>
+    <button id="themeToggle" onclick="toggleTheme()">☀️</button>
   </div>
 
   <!-- LOG CARD -->
@@ -632,6 +654,19 @@
       document.body.removeChild(ta);
     });
   }
+  //-- Theme toggle ─────────────────────────────────────────────
+  function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const next = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  document.getElementById('themeToggle').textContent = next === 'dark' ? '🌙' : '☀️';
+  localStorage.setItem('theme', next);
+}
+
+
+const saved = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', saved);
+document.getElementById('themeToggle').textContent = saved === 'dark' ? '🌙' : '☀️';
 
   // ── Init ──────────────────────────────────────────────────
   window.onload = () => {
