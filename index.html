@@ -19,6 +19,20 @@
       --success: #2e7d52;
       --mono: 'DM Mono', monospace;
       --sans: 'Sora', sans-serif;
+      --transition: 0.25s ease;
+    }
+
+    /* Dark Mode Overrides */
+    body.dark-mode {
+      --bg: #121212;
+      --card: #1c1c1c;
+      --ink: #e5e0d8;
+      --ink-soft: #a19a93;
+      --ink-faint: #3d3935;
+      --accent: #ff6b4a;
+      --accent-bg: #2a1a16;
+      --border: #2d2a27;
+      --success: #81c784;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,24 +43,22 @@
       font-family: var(--sans);
       min-height: 100vh;
       padding: 24px 16px 60px;
+      transition: background var(--transition), color var(--transition);
     }
 
-    .page {
-      max-width: 540px;
-      margin: 0 auto;
-    }
+    .page { max-width: 540px; margin: 0 auto; }
 
     /* ── Header ── */
     .header {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-between;
       padding: 20px 0 28px;
       border-bottom: 2px solid var(--ink);
       margin-bottom: 28px;
     }
 
-    .header h1 {
+    .header-left h1 {
       font-family: var(--mono);
       font-size: 1.15rem;
       font-weight: 500;
@@ -54,12 +66,25 @@
       text-transform: uppercase;
     }
 
-    .header .date-badge {
+    .date-badge {
       font-family: var(--mono);
       font-size: 0.75rem;
       color: var(--ink-soft);
-      letter-spacing: 0.03em;
     }
+
+    .theme-toggle {
+      background: var(--accent-bg);
+      border: 1.5px solid var(--border);
+      color: var(--accent);
+      padding: 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover { border-color: var(--accent); }
 
     /* ── Cards ── */
     .card {
@@ -68,6 +93,7 @@
       border-radius: 14px;
       padding: 22px 20px;
       margin-bottom: 18px;
+      transition: background var(--transition), border-color var(--transition);
     }
 
     .card-title {
@@ -80,24 +106,11 @@
       margin-bottom: 18px;
     }
 
-    /* ── Fields ── */
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 14px;
-    }
+    /* ── Fields & Inputs ── */
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .field label { font-family: var(--mono); font-size: 0.68rem; color: var(--ink-soft); text-transform: uppercase; }
 
-    .field label {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      color: var(--ink-soft);
-      text-transform: uppercase;
-    }
-
-    input[type="date"],
-    input[type="time"] {
+    input[type="date"], input[type="time"] {
       background: var(--bg);
       border: 1.5px solid var(--border);
       border-radius: 8px;
@@ -107,32 +120,11 @@
       padding: 10px 12px;
       width: 100%;
       outline: none;
-      transition: border-color 0.15s;
-      -webkit-appearance: none;
-      appearance: none;
-      color-scheme: light;
+      color-scheme: inherit;
     }
 
-    input[type="date"]:focus,
-    input[type="time"]:focus {
-      border-color: var(--accent);
-    }
-
-    /* ── Time Row ── */
-    .time-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .time-wrap {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-
-    .time-wrap input { flex: 1; }
+    .time-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .time-wrap { display: flex; gap: 6px; align-items: center; }
 
     .now-btn {
       background: var(--accent-bg);
@@ -140,228 +132,68 @@
       color: var(--accent);
       font-family: var(--mono);
       font-size: 0.6rem;
-      letter-spacing: 0.05em;
       padding: 6px 8px;
       border-radius: 6px;
       cursor: pointer;
-      white-space: nowrap;
-      font-weight: 500;
-      transition: background 0.15s;
-      flex-shrink: 0;
     }
-    .now-btn:hover { background: var(--accent); color: white; }
 
     /* ── Breaks ── */
-    .break-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .break-label {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      color: var(--ink-soft);
-      text-transform: uppercase;
-    }
-
-    .add-break-btn {
-      background: none;
-      border: 1.5px dashed var(--ink-faint);
-      color: var(--ink-soft);
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.06em;
-      padding: 5px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .add-break-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-    .break-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .break-row input { flex: 1; }
-
-    .remove-btn {
-      background: none;
-      border: none;
-      color: var(--ink-faint);
-      font-size: 16px;
-      cursor: pointer;
-      padding: 4px;
-      line-height: 1;
-      transition: color 0.15s;
-      flex-shrink: 0;
-    }
-    .remove-btn:hover { color: var(--accent); }
+    .break-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .add-break-btn { background: none; border: 1.5px dashed var(--ink-faint); color: var(--ink-soft); font-family: var(--mono); font-size: 0.68rem; padding: 5px 10px; border-radius: 6px; cursor: pointer; }
+    .break-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+    .remove-btn { background: none; border: none; color: var(--ink-faint); cursor: pointer; padding: 4px; }
 
     /* ── Actions ── */
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      margin-top: 18px;
-    }
+    .actions { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 18px; }
+    .save-btn { background: var(--ink); color: var(--bg); border: none; border-radius: 8px; font-family: var(--mono); font-size: 0.78rem; padding: 12px; cursor: pointer; font-weight: 500; }
+    .del-btn { background: none; border: 1.5px solid var(--border); color: var(--ink-soft); border-radius: 8px; font-family: var(--mono); font-size: 0.78rem; padding: 12px 16px; cursor: pointer; }
 
-    .save-btn {
-      background: var(--ink);
-      color: var(--bg);
-      border: none;
-      border-radius: 8px;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 12px;
-      cursor: pointer;
-      transition: opacity 0.15s;
-      font-weight: 500;
-    }
-    .save-btn:hover { opacity: 0.8; }
+    /* ── History ── */
+    .history-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .history-date, .history-hrs { font-family: var(--mono); font-size: 0.82rem; }
+    .weekly-total { display: flex; justify-content: space-between; margin-top: 14px; padding-top: 12px; border-top: 2px solid var(--ink); font-family: var(--mono); font-weight: 600; }
 
-    .del-btn {
-      background: none;
-      border: 1.5px solid var(--border);
-      color: var(--ink-soft);
-      border-radius: 8px;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.06em;
-      padding: 12px 16px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .del-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* ── History List ── */
-    .history-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .history-row:last-of-type { border-bottom: none; }
-
-    .history-date {
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      color: var(--ink);
-    }
-
-    .history-hrs {
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--ink);
-    }
-
-    .weekly-total {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 2px solid var(--ink);
-    }
-
-    .weekly-total span {
-      font-family: var(--mono);
-      font-size: 0.9rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-    }
-
-    /* ── Summary Box ── */
-    .summary-box {
-      background: var(--bg);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
-      margin-top: 18px;
-    }
-
-    .summary-text {
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      line-height: 1.85;
-      color: var(--ink);
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .copy-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: none;
-      border: 1.5px solid var(--border);
-      border-radius: 7px;
-      color: var(--ink-soft);
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 7px 12px;
-      cursor: pointer;
-      margin-top: 12px;
-      transition: all 0.15s;
-    }
-    .copy-btn:hover { border-color: var(--success); color: var(--success); }
+    /* ── Summary ── */
+    .summary-box { background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px; padding: 16px; margin-top: 18px; }
+    .summary-text { font-family: var(--mono); font-size: 0.82rem; line-height: 1.85; white-space: pre-wrap; }
+    .copy-btn { display: flex; align-items: center; gap: 6px; background: none; border: 1.5px solid var(--border); border-radius: 7px; color: var(--ink-soft); font-family: var(--mono); font-size: 0.68rem; padding: 7px 12px; cursor: pointer; margin-top: 12px; }
     .copy-btn.copied { border-color: var(--success); color: var(--success); }
 
-    /* ── Reset notice ── */
-    .reset-notice {
-      font-family: var(--mono);
-      font-size: 0.66rem;
-      color: var(--ink-faint);
-      text-align: center;
-      margin-top: 10px;
-      letter-spacing: 0.04em;
-    }
-
-    .empty-note {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      color: var(--ink-faint);
-      text-align: center;
-      padding: 18px 0;
-    }
+    .reset-notice { font-family: var(--mono); font-size: 0.66rem; color: var(--ink-faint); text-align: center; margin-top: 10px; }
+    .empty-note { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-faint); text-align: center; padding: 18px 0; }
   </style>
 </head>
 <body>
 
 <div class="page">
-
   <div class="header">
-    <h1>Work Logger</h1>
-    <span class="date-badge" id="todayDate"></span>
+    <div class="header-left">
+      <h1>Work Logger</h1>
+      <span class="date-badge" id="todayDate"></span>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
   </div>
 
-  <!-- LOG CARD -->
   <div class="card">
     <div class="card-title">Log Entry</div>
-
     <div class="field">
       <label>Date</label>
       <input type="date" id="datePicker">
     </div>
 
     <div class="time-row">
-      <div class="field" style="margin-bottom:0">
+      <div class="field">
         <label>Start time</label>
         <div class="time-wrap">
           <input type="time" id="startTime">
           <button class="now-btn" onclick="setNow('startTime')">Now</button>
         </div>
       </div>
-      <div class="field" style="margin-bottom:0">
+      <div class="field">
         <label>End time</label>
         <div class="time-wrap">
           <input type="time" id="endTime">
@@ -370,143 +202,80 @@
       </div>
     </div>
 
-    <div class="break-header" style="margin-top:14px">
+    <div class="break-header">
       <span class="break-label">Breaks</span>
       <button class="add-break-btn" onclick="addBreak()">+ Add break</button>
     </div>
-
     <div id="breakContainer"></div>
 
     <div class="actions">
       <button class="save-btn" onclick="saveData()">Save Entry</button>
       <button class="del-btn" onclick="deleteDay()">Delete</button>
     </div>
-  </div>
 
-  <!-- WEEKLY CARD -->
-  <div class="card">
-    <div class="card-title">This Week <span id="weekRange" style="font-weight:300; letter-spacing:0.02em"></span></div>
-    <div id="weeklyData"></div>
-
-    <!-- SUMMARY -->
-    <div class="summary-box" id="summaryBox" style="display:none">
-      <pre class="summary-text" id="summaryText"></pre>
+    <div class="summary-box" id="daySummaryBox" style="display:none">
+      <pre class="summary-text" id="daySummaryText"></pre>
       <button class="copy-btn" id="copyBtn" onclick="copySummary()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"/></svg>
         Copy text
       </button>
     </div>
-
-    <div class="reset-notice" id="resetNotice"></div>
   </div>
 
+  <div class="card">
+    <div class="card-title">This Week <span id="weekRange" style="font-weight:300"></span></div>
+    <div id="weeklyData"></div>
+    <div class="reset-notice" id="resetNotice"></div>
+  </div>
 </div>
 
 <script>
-  // ── Helpers ──────────────────────────────────────────────
-  const toMin = t => {
-    if (!t) return 0;
-    const [h, m] = t.split(':').map(Number);
-    return h * 60 + m;
-  };
+  // ── Helpers ──
+  const toMin = t => { if (!t) return 0; const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+  const fmtTime = t => { if (!t) return '–'; let [h, m] = t.split(':').map(Number); const ampm = h >= 12 ? 'pm' : 'am'; h = h % 12 || 12; return `${h}:${String(m).padStart(2,'0')} ${ampm}`; };
+  const fmtDate = dateStr => new Date(dateStr + 'T00:00:00').toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+  const fmtHrMin = mins => { const h = Math.floor(mins / 60); const m = Math.round(mins % 60); return h === 0 ? `${m} min` : m === 0 ? `${h} hr` : `${h} hr ${m} min`; };
 
-  const fmtTime = t => {
-    if (!t) return '–';
-    let [h, m] = t.split(':').map(Number);
-    const ampm = h >= 12 ? 'pm' : 'am';
-    h = h % 12 || 12;
-    return `${h}:${String(m).padStart(2,'0')} ${ampm}`;
-  };
+  function setNow(id) { document.getElementById(id).value = new Date().toTimeString().slice(0,5); }
 
-  const fmtDate = dateStr => {
-    const d = new Date(dateStr + 'T00:00:00');
-    return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
-  };
-
-  const fmtHrMin = totalMins => {
-    const h = Math.floor(totalMins / 60);
-    const m = Math.round(totalMins % 60);
-    if (h === 0) return `${m} min`;
-    if (m === 0) return `${h} hr`;
-    return `${h} hr ${m} min`;
-  };
-
-  function setNow(id) {
-    const now = new Date();
-    document.getElementById(id).value = now.toTimeString().slice(0,5);
-  }
-
-  // ── Monday of current week ────────────────────────────────
   function getWeekMonday(from = new Date()) {
-    const d = new Date(from);
-    d.setHours(0,0,0,0);
-    const day = d.getDay(); // 0=Sun
-    const diff = day === 0 ? -6 : 1 - day;
-    d.setDate(d.getDate() + diff);
-    return d;
+    const d = new Date(from); d.setHours(0,0,0,0);
+    const day = d.getDay(); const diff = day === 0 ? -6 : 1 - day;
+    d.setDate(d.getDate() + diff); return d;
   }
 
-  function getWeekKey() {
-    const mon = getWeekMonday();
-    return mon.toISOString().slice(0,10);
-  }
-
-  // ── Storage with weekly auto-reset ───────────────────────
   function loadStore() {
-    try {
-      const raw = localStorage.getItem('workLogs_v2');
-      if (!raw) return { weekKey: getWeekKey(), days: {} };
-      const store = JSON.parse(raw);
-      // auto-reset on new week
-      if (store.weekKey !== getWeekKey()) {
-        return { weekKey: getWeekKey(), days: {} };
-      }
-      return store;
-    } catch { return { weekKey: getWeekKey(), days: {} }; }
+    const raw = localStorage.getItem('workLogs_v2');
+    const monKey = getWeekMonday().toISOString().slice(0,10);
+    if (!raw) return { weekKey: monKey, days: {} };
+    const store = JSON.parse(raw);
+    return store.weekKey !== monKey ? { weekKey: monKey, days: {} } : store;
   }
 
-  function saveStore(store) {
-    localStorage.setItem('workLogs_v2', JSON.stringify(store));
-  }
+  function saveStore(store) { localStorage.setItem('workLogs_v2', JSON.stringify(store)); }
 
-  // ── Breaks ───────────────────────────────────────────────
   function addBreak(s = '', e = '') {
-    const row = document.createElement('div');
-    row.className = 'break-row';
-    row.innerHTML = `
-      <input type="time" class="bStart" value="${s}">
-      <input type="time" class="bEnd" value="${e}">
-      <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
-    `;
-    document.getElementById('breakContainer').appendChild(row);
+    const div = document.createElement('div'); div.className = 'break-row';
+    div.innerHTML = `<input type="time" class="bStart" value="${s}"><input type="time" class="bEnd" value="${e}"><button class="remove-btn" onclick="this.parentElement.remove()">✕</button>`;
+    document.getElementById('breakContainer').appendChild(div);
   }
 
-  // ── Calc net hours ────────────────────────────────────────
   function calcMins(day) {
     let total = toMin(day.end) - toMin(day.start);
     if (total < 0) total += 1440;
-    (day.breaks || []).forEach(b => {
-      const diff = toMin(b.end) - toMin(b.start);
-      if (diff > 0) total -= diff;
-    });
+    (day.breaks || []).forEach(b => { const diff = toMin(b.end) - toMin(b.start); if (diff > 0) total -= diff; });
     return Math.max(0, total);
   }
 
-  // ── Save ─────────────────────────────────────────────────
   function saveData() {
     const key = document.getElementById('datePicker').value;
-    if (!key) { alert('Select a date'); return; }
-
     const start = document.getElementById('startTime').value;
     const end = document.getElementById('endTime').value;
-
-    if (!start || !end) { alert('Enter start and end time'); return; }
-    if (toMin(end) <= toMin(start)) { alert('End time must be after start time'); return; }
+    if (!key || !start || !end) return alert('Fill all fields');
 
     const breaks = [];
     document.querySelectorAll('.break-row').forEach(b => {
-      const s = b.querySelector('.bStart').value;
-      const e = b.querySelector('.bEnd').value;
+      const s = b.querySelector('.bStart').value; const e = b.querySelector('.bEnd').value;
       if (s && e) breaks.push({ start: s, end: e });
     });
 
@@ -514,136 +283,91 @@
     store.days[key] = { start, end, breaks };
     saveStore(store);
     loadWeekly();
+    updateDaySummary();
   }
 
-  // ── Load day into form ────────────────────────────────────
   function loadDayData() {
     const key = document.getElementById('datePicker').value;
-    const store = loadStore();
-    const day = store.days[key];
-
+    const day = loadStore().days[key];
     document.getElementById('startTime').value = day?.start || '';
     document.getElementById('endTime').value = day?.end || '';
     document.getElementById('breakContainer').innerHTML = '';
     (day?.breaks || []).forEach(b => addBreak(b.start, b.end));
+    updateDaySummary();
   }
 
-  // ── Delete ────────────────────────────────────────────────
   function deleteDay() {
     const key = document.getElementById('datePicker').value;
-    if (!confirm('Delete this entry?')) return;
-    const store = loadStore();
-    delete store.days[key];
-    saveStore(store);
-    loadDayData();
-    loadWeekly();
+    if (!confirm('Delete entry?')) return;
+    const store = loadStore(); delete store.days[key];
+    saveStore(store); loadDayData(); loadWeekly();
   }
 
-  // ── Weekly display + summary ──────────────────────────────
   function loadWeekly() {
     const store = loadStore();
     const container = document.getElementById('weeklyData');
     container.innerHTML = '';
+    const entries = Object.entries(store.days).sort((a,b) => a[0].localeCompare(b[0]));
 
-    const entries = Object.entries(store.days)
-      .sort((a, b) => a[0].localeCompare(b[0]));
+    if (!entries.length) { container.innerHTML = '<div class="empty-note">No entries this week</div>'; return; }
 
-    if (entries.length === 0) {
-      container.innerHTML = '<div class="empty-note">No entries this week</div>';
-      document.getElementById('summaryBox').style.display = 'none';
-      return;
-    }
-
-    let grandTotalMins = 0;
-
+    let grandMins = 0;
     entries.forEach(([date, d]) => {
-      const mins = calcMins(d);
-      grandTotalMins += mins;
-
-      const row = document.createElement('div');
-      row.className = 'history-row';
-      row.innerHTML = `
-        <span class="history-date">${fmtDate(date)}</span>
-        <span class="history-hrs">${fmtHrMin(mins)}</span>
-      `;
-      container.appendChild(row);
+      const mins = calcMins(d); grandMins += mins;
+      container.innerHTML += `<div class="history-row"><span class="history-date">${fmtDate(date)}</span><span class="history-hrs">${fmtHrMin(mins)}</span></div>`;
     });
 
-    // total row
-    const totalRow = document.createElement('div');
-    totalRow.className = 'weekly-total';
-    totalRow.innerHTML = `
-      <span>Grand Total</span>
-      <span>${fmtHrMin(grandTotalMins)}</span>
-    `;
-    container.appendChild(totalRow);
-
-    // week range in title
-    const mon = getWeekMonday();
-    const sun = new Date(mon); sun.setDate(sun.getDate() + 6);
-    document.getElementById('weekRange').textContent =
-      `— ${mon.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})} to ${sun.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})}`;
-
-    // Build summary text
-    let lines = [];
-    entries.forEach(([date, d]) => {
-      const mins = calcMins(d);
-      const breakParts = (d.breaks || []).map(b => `${fmtTime(b.start)} – ${fmtTime(b.end)}`);
-      const breakStr = breakParts.length ? breakParts.join(', ') : 'NIL';
-
-      lines.push(
-        `${fmtDate(date)} :-`,
-        `Working hours :- ${fmtTime(d.start)} to ${fmtTime(d.end)}`,
-        `Break :- ${breakStr}`,
-        `Total hours :- ${fmtHrMin(mins)}`,
-        ``
-      );
-    });
-
-    lines.push(`Grand Total hours :- ${fmtHrMin(grandTotalMins)}`);
-
-    document.getElementById('summaryText').textContent = lines.join('\n');
-    document.getElementById('summaryBox').style.display = 'block';
-
-    // Next reset notice
+    container.innerHTML += `<div class="weekly-total"><span>Grand Total</span><span>${fmtHrMin(grandMins)}</span></div>`;
+    
+    const mon = getWeekMonday(); const sun = new Date(mon); sun.setDate(sun.getDate() + 6);
+    document.getElementById('weekRange').textContent = `— ${fmtDate(mon.toISOString().slice(0,10))} to ${fmtDate(sun.toISOString().slice(0,10))}`;
+    
     const nextMon = new Date(mon); nextMon.setDate(nextMon.getDate() + 7);
-    document.getElementById('resetNotice').textContent =
-      `Auto-resets on ${nextMon.toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short'})}`;
+    document.getElementById('resetNotice').textContent = `Auto-resets on ${nextMon.toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short'})}`;
+    updateDaySummary(grandMins);
   }
 
-  // ── Copy summary ──────────────────────────────────────────
+  function updateDaySummary(grandMins) {
+    const key = document.getElementById('datePicker').value;
+    const store = loadStore(); const day = store.days[key];
+    const box = document.getElementById('daySummaryBox');
+    if (!day) { box.style.display = 'none'; return; }
+
+    if (grandMins === undefined) grandMins = Object.values(store.days).reduce((s, d) => s + calcMins(d), 0);
+
+    const breakStr = (day.breaks || []).map(b => `${fmtTime(b.start)} – ${fmtTime(b.end)}`).join(', ') || 'NIL';
+    document.getElementById('daySummaryText').textContent = `${fmtDate(key)} :-\nWorking hours :- ${fmtTime(day.start)} to ${fmtTime(day.end)}\nBreak :- ${breakStr}\nTotal hours :- ${fmtHrMin(calcMins(day))}\n\nGrand Total hours :- ${fmtHrMin(grandMins)}`;
+    box.style.display = 'block';
+  }
+
   function copySummary() {
-    const text = document.getElementById('summaryText').textContent;
-    navigator.clipboard.writeText(text).then(() => {
+    navigator.clipboard.writeText(document.getElementById('daySummaryText').textContent).then(() => {
       const btn = document.getElementById('copyBtn');
-      btn.classList.add('copied');
-      btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
-      setTimeout(() => {
-        btn.classList.remove('copied');
-        btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"/></svg> Copy text`;
-      }, 2200);
-    }).catch(() => {
-      // fallback
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
+      btn.classList.add('copied'); btn.innerHTML = `Copied!`;
+      setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = `Copy text`; }, 2000);
     });
   }
 
-  // ── Init ──────────────────────────────────────────────────
+  // ── Theme Logic ──
+  function toggleTheme() {
+    const isDark = document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updateThemeIcon(isDark);
+  }
+
+  function updateThemeIcon(isDark) {
+    const icon = document.getElementById('themeIcon');
+    icon.innerHTML = isDark 
+      ? `<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>`
+      : `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+  }
+
   window.onload = () => {
-    const today = new Date().toISOString().slice(0,10);
-    document.getElementById('datePicker').value = today;
-    document.getElementById('todayDate').textContent =
-      new Date().toLocaleDateString('en-IN',{weekday:'long', day:'numeric', month:'long', year:'numeric'});
-
+    if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); updateThemeIcon(true); }
+    document.getElementById('datePicker').value = new Date().toISOString().slice(0,10);
+    document.getElementById('todayDate').textContent = new Date().toLocaleDateString('en-IN',{weekday:'long', day:'numeric', month:'long', year:'numeric'});
     document.getElementById('datePicker').addEventListener('change', loadDayData);
-
-    loadDayData();
-    loadWeekly();
+    loadDayData(); loadWeekly();
   };
 </script>
 </body>
