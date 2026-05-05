@@ -670,7 +670,7 @@ document.getElementById('themeToggle').textContent = saved === 'dark' ? '🌙' :
 
   // ── Init ──────────────────────────────────────────────────
   window.onload = () => {
-    const today = new Date().toISOString().slice(0,10);
+    const today = new Date().toLocaleDateString('en-CA');
     document.getElementById('datePicker').value = today;
     document.getElementById('todayDate').textContent =
       new Date().toLocaleDateString('en-IN',{weekday:'long', day:'numeric', month:'long', year:'numeric'});
