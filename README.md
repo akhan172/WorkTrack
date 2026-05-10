@@ -2,8 +2,6 @@
  
 A clean, minimal daily work hour tracker that runs entirely in your browser — no backend, no account, no nonsense.
  
-Built as a single `index.html` file. Deploy it anywhere static hosting is supported, including **GitHub Pages** for free.
- 
 ---
  
 ## ✨ Features
